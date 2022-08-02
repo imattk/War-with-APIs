@@ -9,20 +9,22 @@ const remainingText = document.getElementById("remaining")
 const computerScoreEl = document.getElementById("computer-score")
 const myScoreEl = document.getElementById("my-score")
 
-async function handleClick() {
-    const res = await fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
-    const data = res.json()
+function handleClick() {
+    fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
+        .then(res => res.json())
+        .then(data => {
             remainingText.textContent = `Remaining cards: ${data.remaining}`
             deckId = data.deck_id
             //console.log(deckId)
-        }
-
+        })
+}
 
 newDeckBtn.addEventListener("click", handleClick)
 
-drawCardBtn.addEventListener("click", async() => {
-    const res = await fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
-    const data = res.json()
+drawCardBtn.addEventListener("click", () => {
+    fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
+        .then(res => res.json())
+        .then(data => {
             remainingText.textContent = `Remaining cards: ${data.remaining}`
             if (data.remaining === undefined){
                 remainingText.textContent = "You must get a New Deck first"
@@ -47,8 +49,9 @@ drawCardBtn.addEventListener("click", async() => {
                     header.textContent = "It's a tie game!"
                 }
             }
+            
         })
-
+})
 
 function determineCardWinner(card1, card2) {
     const valueOptions = ["2", "3", "4", "5", "6", "7", "8", "9", 
