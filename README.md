@@ -12,7 +12,7 @@ simple game of war using a cards API
    -	Functions as first class object
 - Promises 
    - pending, fulfilled, rejected
- 	 - .then() and chaining
+ 	- .then() and chaining
 - Algorithm practice
 - UX improvement
 
