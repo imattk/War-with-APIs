@@ -9,22 +9,20 @@ const remainingText = document.getElementById("remaining")
 const computerScoreEl = document.getElementById("computer-score")
 const myScoreEl = document.getElementById("my-score")
 
-function handleClick() {
-    fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
-        .then(res => res.json())
-        .then(data => {
+async function handleClick() {
+    const res = await fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
+    const data = res.json()
             remainingText.textContent = `Remaining cards: ${data.remaining}`
             deckId = data.deck_id
             //console.log(deckId)
-        })
-}
+        }
+
 
 newDeckBtn.addEventListener("click", handleClick)
 
-drawCardBtn.addEventListener("click", () => {
-    fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
-        .then(res => res.json())
-        .then(data => {
+drawCardBtn.addEventListener("click", async() => {
+    const res = await fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
+    const data = res.json()
             remainingText.textContent = `Remaining cards: ${data.remaining}`
             if (data.remaining === undefined){
                 remainingText.textContent = "You must get a New Deck first"
@@ -39,7 +37,8 @@ drawCardBtn.addEventListener("click", () => {
             header.textContent = winnerText
             
             if (data.remaining === 0) {
-                drawCardBtn.disabled = true
+                drawCardBtn.innerHTML = `<button class="draw" onclick="location.reload()">Go Again?</button>
+                `
                 if (computerScore > myScore) {
                     header.textContent = "The computer won the game!"
                 } else if (myScore > computerScore) {
@@ -48,9 +47,8 @@ drawCardBtn.addEventListener("click", () => {
                     header.textContent = "It's a tie game!"
                 }
             }
-            
         })
-})
+
 
 function determineCardWinner(card1, card2) {
     const valueOptions = ["2", "3", "4", "5", "6", "7", "8", "9", 
@@ -70,4 +68,5 @@ function determineCardWinner(card1, card2) {
         return "War!"
         
     }
+
 }
