@@ -16,3 +16,4 @@ simple game of war using a cards API
 - Algorithm practice
 - UX improvement
 
+try it yourself! https://imattk.github.io/War-with-APIs/
